@@ -28,7 +28,17 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "src/theme-bootstrap4-dark-purple.scss",
+                "bundleName": "bootstrap4-dark-purple",
+                "inject": false
+              },
+              {
+                "input": "src/theme-bootstrap4-light-purple.scss",
+                "bundleName": "bootstrap4-light-purple",
+                "inject": false
+              }
             ],
             "scripts": []
           },
