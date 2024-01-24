@@ -1,11 +1,14 @@
 <div class="toolbar">
-    <i class="pi pi-sun" style="font-size: 1.5rem"></i>
+  <i class="pi pi-sun" style="font-size: 1.5rem"></i>
     <p-inputSwitch (onChange)="handleChange($event)"></p-inputSwitch>
   </div>
+  <p-toast [breakpoints]="{'920px': {width: '90%', right: '5%', left: '5%', height: 'auto'}}"></p-toast>
 <div class="container">
     <div class="center">
       <h2>Montante Inicial: {{ montanteInicial | currency:'BRL' }}</h2>
-      <input id="valorInicial" [(ngModel)]="montanteInicial" pInputText type="number" placeholder="Digite o valor inicial" />
+      <input id="valorInicial" [(ngModel)]="montanteInicial" pInputText type="number" placeholder="Digite o valor inicial" style="margin-right: 5px;"/>
+      <button (click)="resetarTudo()" pButton type="button" label="Resetar"></button>
+
     </div>
     <div class="center">
         <h2>Adicionar gasto</h2>
@@ -25,7 +28,7 @@
       </div>
       <div class="center">
         <h2>Gastos Mensais</h2>
-        <p-table [value]="valores" styleClass="custom-table" [scrollable]="true" scrollHeight="400px">
+        <p-table [value]="valores" styleClass="custom-table" [scrollable]="true" scrollHeight="250px">
           <ng-template pTemplate="header">
             <tr>
               <th>Descrição</th>

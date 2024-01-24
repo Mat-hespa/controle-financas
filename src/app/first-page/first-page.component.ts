@@ -1,60 +1,103 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ThemeService } from '../services/theme.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-first-page',
   templateUrl: './first-page.component.html',
-  styleUrls: ['./first-page.component.scss']
+  styleUrls: ['./first-page.component.scss'],
 })
-export class FirstPageComponent {
-  selectedItem: any; // Certifique-se de que o tipo corresponda aos itens em 'valores'
-  montanteInicial: number = 0;  // Inicializado com zero
+export class FirstPageComponent implements OnInit {
+  selectedItem: any;
+  montanteInicial: number = 0;
   valores: { valor: number; descricao: string }[] = [];
   novoValor: number = 0;
   descricaoGasto: string = '';
+  themeSelection: boolean = false;
 
-  constructor(private themeService: ThemeService) {}
-  changeTheme(theme: string) {
-    this.themeService.switchTheme(theme);
-}
+  constructor(
+    private themeService: ThemeService,
+    @Inject(DOCUMENT)
+    private document: Document,
+    private messageService: MessageService // Injete o MessageService
+  ) {}
 
-  handleChange(e: any) {
-    let isChecked = e.checked;
-    isChecked ? this.themeService.switchTheme('bootstrap4-dark-purple') : this.themeService.switchTheme('bootstrap4-light-purple');
+  ngOnInit() {
+    this.loadMontanteInicialFromStorage();
+    this.loadValoresFromStorage();
   }
 
-  // themeSelection: boolean = false;
-  // constructor(@Inject(DOCUMENT) private document: Document) {
-  //   let theme = window.localStorage.getItem("theme");
-  //   if (theme) {
-  //     this.themeSelection = theme == "dark" ? true : false;
-  //     this.changeTheme(this.themeSelection);
-  //   }
-  // }
+  loadMontanteInicialFromStorage() {
+    let montanteInicial = window.localStorage.getItem('montanteInicial');
+    if (montanteInicial) {
+      this.montanteInicial = parseFloat(montanteInicial);
+    }
+  }
 
-  // changeTheme(state: boolean){
-  //   let theme = state ? "dark" : "light";
-  //   window.localStorage.setItem("theme", theme);
-  //   let themeLink = this.document.getElementById("app-theme") as HTMLLinkElement;
-  //   themeLink.href = "bootstrap4-" + theme + "-purple" + ".css"
-  // }
+  loadValoresFromStorage() {
+    let valoresString = window.localStorage.getItem('valores');
+    if (valoresString) {
+      this.valores = JSON.parse(valoresString);
+    }
+  }
+
+  saveMontanteInicialToStorage() {
+    window.localStorage.setItem(
+      'montanteInicial',
+      this.montanteInicial.toString()
+    );
+  }
+
+  saveValoresToStorage() {
+    let valoresString = JSON.stringify(this.valores);
+    window.localStorage.setItem('valores', valoresString);
+  }
+
+  resetarTudo() {
+    // Redefinir os valores
+    this.montanteInicial = 0;
+    this.valores = [];
+    this.novoValor = 0;
+    this.descricaoGasto = '';
+
+    // Atualizar o storage
+    this.saveMontanteInicialToStorage();
+    this.saveValoresToStorage();
+  }
 
   diminuirValor() {
-    this.valores.unshift({ valor: this.novoValor, descricao: this.descricaoGasto });
+    if (this.novoValor === 0 || this.descricaoGasto.trim() === '') {
+      this.messageService.clear();
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Preencha todos os campos antes de adicionar um gasto.' });
+      return;
+    }
+    this.valores.unshift({
+      valor: this.novoValor,
+      descricao: this.descricaoGasto,
+    });
     this.montanteInicial -= this.novoValor;
     this.novoValor = 0;
     this.descricaoGasto = '';
-    console.log(this.valores[0].valor)
-    console.log(this.novoValor)
+    this.saveMontanteInicialToStorage();
+    this.saveValoresToStorage();
   }
 
   somarValor(item: any) {
-    const index = this.valores.findIndex(val => val === item);
+    const index = this.valores.findIndex((val) => val === item);
     if (index !== -1) {
       const valorSubtraido = this.valores[index].valor;
       this.montanteInicial += valorSubtraido;
       this.valores.splice(index, 1);
+      this.saveMontanteInicialToStorage();
+      this.saveValoresToStorage();
     }
+  }
+
+  handleChange(e: any) {
+    let isChecked = e.checked;
+    isChecked
+      ? this.themeService.switchTheme('bootstrap4-dark-purple')
+      : this.themeService.switchTheme('bootstrap4-light-purple');
   }
 }

@@ -9,7 +9,11 @@ import {InputSwitchModule} from 'primeng/inputswitch';
 import {ToolbarModule} from 'primeng/toolbar';
 import {MenubarModule} from 'primeng/menubar';
 import {MenuModule} from 'primeng/menu';
+import {ToastModule} from 'primeng/toast';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
+import { MessageService } from 'primeng/api';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,7 +23,7 @@ import { FirstPageComponent } from './first-page/first-page.component';
 @NgModule({
   declarations: [
     AppComponent,
-    FirstPageComponent
+    FirstPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,9 +36,13 @@ import { FirstPageComponent } from './first-page/first-page.component';
     InputSwitchModule,
     ToolbarModule,
     MenubarModule,
-    MenuModule
+    MenuModule,
+    ToastModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    MessageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
