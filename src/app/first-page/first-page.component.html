@@ -1,3 +1,7 @@
+<div class="toolbar">
+    <i class="pi pi-sun" style="font-size: 1.5rem"></i>
+    <p-inputSwitch (onChange)="handleChange($event)"></p-inputSwitch>
+  </div>
 <div class="container">
     <div class="center">
       <h2>Montante Inicial: {{ montanteInicial | currency:'BRL' }}</h2>
@@ -40,11 +44,5 @@
           </ng-template>
         </p-table>
       </div>
-      <div class="theme-switch-container">
-        <p-button (click)="changeTheme('bootstrap4-light-purple')" class="mr-3 cursor-pointer"></p-button>
-      </div>
-      <div class="theme-switch-container">
-        <p-button (click)="changeTheme('bootstrap4-dark-purple')" class="mr-3 cursor-pointer"></p-button>
-      </div>          
   </div>
 

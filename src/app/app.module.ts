@@ -5,6 +5,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ListboxModule } from 'primeng/listbox';
 import { TableModule } from 'primeng/table';
+import {InputSwitchModule} from 'primeng/inputswitch';
+import {ToolbarModule} from 'primeng/toolbar';
+import {MenubarModule} from 'primeng/menubar';
+import {MenuModule} from 'primeng/menu';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,7 +28,11 @@ import { FirstPageComponent } from './first-page/first-page.component';
     InputTextModule,
     ButtonModule,
     ListboxModule,
-    TableModule
+    TableModule,
+    InputSwitchModule,
+    ToolbarModule,
+    MenubarModule,
+    MenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

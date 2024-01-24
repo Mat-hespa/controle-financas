@@ -19,6 +19,11 @@ export class FirstPageComponent {
     this.themeService.switchTheme(theme);
 }
 
+  handleChange(e: any) {
+    let isChecked = e.checked;
+    isChecked ? this.themeService.switchTheme('bootstrap4-dark-purple') : this.themeService.switchTheme('bootstrap4-light-purple');
+  }
+
   // themeSelection: boolean = false;
   // constructor(@Inject(DOCUMENT) private document: Document) {
   //   let theme = window.localStorage.getItem("theme");

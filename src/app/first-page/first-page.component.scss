@@ -10,5 +10,20 @@
     text-align: center;
     margin-bottom: 20px; /* Ajuste conforme necessário */
   }
-  
-  
+
+  .toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #883cae;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Adiciona espaço entre os elementos */
+  }
+
+  h2 {
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-weight: bold; 
+  }
