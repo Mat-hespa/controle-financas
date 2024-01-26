@@ -11,7 +11,7 @@ import { MessageService } from 'primeng/api';
 export class FirstPageComponent implements OnInit {
   selectedItem: any;
   montanteInicial: number = 0;
-  valores: { valor: number; descricao: string }[] = [];
+  valores: { valor: number; descricao: string, tempo: string}[] = [];
   novoValor: number = 0;
   descricaoGasto: string = '';
   themeSelection: boolean = false;
@@ -55,13 +55,10 @@ export class FirstPageComponent implements OnInit {
   }
 
   resetarTudo() {
-    // Redefinir os valores
     this.montanteInicial = 0;
     this.valores = [];
     this.novoValor = 0;
     this.descricaoGasto = '';
-
-    // Atualizar o storage
     this.saveMontanteInicialToStorage();
     this.saveValoresToStorage();
   }
@@ -69,12 +66,17 @@ export class FirstPageComponent implements OnInit {
   diminuirValor() {
     if (this.novoValor === 0 || this.descricaoGasto.trim() === '') {
       this.messageService.clear();
-      this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Preencha todos os campos antes de adicionar um gasto.' });
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'Preencha todos os campos antes de adicionar um gasto.',
+      });
       return;
     }
     this.valores.unshift({
       valor: this.novoValor,
       descricao: this.descricaoGasto,
+      tempo: this.formatarData(new Date())
     });
     this.montanteInicial -= this.novoValor;
     this.novoValor = 0;
@@ -82,6 +84,13 @@ export class FirstPageComponent implements OnInit {
     this.saveMontanteInicialToStorage();
     this.saveValoresToStorage();
   }
+
+  formatarData(data: Date): string {
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0'); // O mês é baseado em zero
+    const ano = String(data.getFullYear()).slice(-2);
+    return `${dia}/${mes}/${ano}`;
+  }  
 
   somarValor(item: any) {
     const index = this.valores.findIndex((val) => val === item);

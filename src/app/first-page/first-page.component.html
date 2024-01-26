@@ -28,12 +28,13 @@
       </div>
       <div class="center">
         <h2>Gastos Mensais</h2>
-        <p-table [value]="valores" styleClass="custom-table" [scrollable]="true" scrollHeight="250px">
+        <p-table [value]="valores"  [scrollable]="true" scrollHeight="250px">
           <ng-template pTemplate="header">
             <tr>
               <th>Descrição</th>
               <th>Preço</th>
-              <th>Voltar Gasto</th>
+              <th>Zerar</th>
+              <th>Data</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-item>
@@ -43,6 +44,7 @@
               <td>
                 <button (click)="somarValor(item)" pButton type="button" icon="pi pi-minus" styleClass="p-button-danger"></button>
               </td>
+              <td>{{item.tempo}}</td>
             </tr>
           </ng-template>
         </p-table>
